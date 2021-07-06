@@ -63,3 +63,32 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+const galleryListRef = document.querySelector(`.js-gallery`);
+const modalRef = document.querySelector(`.lightbox`);
+const modalImgRef = document.querySelector('.lightbox__image');
+const buttonRef = document.querySelector('.lightbox__button');
+
+const createGalleryList = ({ preview, original, description }) =>
+  `<li class="gallery__item">
+<a
+  class="gallery__link"
+  href=${original}
+>
+  <img
+    class="gallery__image"
+    src=${preview}
+    data-source=${original}
+    alt=${description}
+  />
+</a>
+</li>`;
+
+const galleryMarkup = galleryItems.reduce(
+  (acc, item) => acc + createGalleryList(item),
+  ``,
+);
+
+galleryListRef.insertAdjacentHTML('afterbegin', galleryMarkup);
+
+console.log(galleryListRef);

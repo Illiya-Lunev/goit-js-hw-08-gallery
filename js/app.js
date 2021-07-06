@@ -64,10 +64,14 @@ const galleryItems = [
   },
 ];
 
+// Шаг 1 найти классы с html через querySelector
+
 const galleryListRef = document.querySelector(`.js-gallery`);
 const modalRef = document.querySelector(`.lightbox`);
 const modalImgRef = document.querySelector('.lightbox__image');
 const buttonRef = document.querySelector('.lightbox__button');
+
+// Шаг 2 добавить как  шаблоную строку
 
 const createGalleryList = ({ preview, original, description }) =>
   `<li class="gallery__item">
@@ -84,11 +88,13 @@ const createGalleryList = ({ preview, original, description }) =>
 </a>
 </li>`;
 
+// Шаг 3 перебрать массив
 const galleryMarkup = galleryItems.reduce(
   (acc, item) => acc + createGalleryList(item),
   ``,
 );
 
+// шаг 4 добавить новый массив в html
 galleryListRef.insertAdjacentHTML('afterbegin', galleryMarkup);
 
-console.log(galleryListRef);
+// Шаг 5 добавить слушателей на Галлерию , модалку, и кнопку

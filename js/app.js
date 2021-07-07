@@ -67,14 +67,16 @@ const galleryItems = [
 // Шаг 1 найти классы с html через querySelector
 
 const galleryListRef = document.querySelector(`.js-gallery`);
-const modalRef = document.querySelector(`.lightbox`);
+const modalRef = document.querySelector(`.lightbox__content`);
 const modalImgRef = document.querySelector('.lightbox__image');
-const buttonRef = document.querySelector('.lightbox__button');
+const buttonRef = document.querySelector('[data-action="close-lightbox"]');
+const modalLightBox = document.querySelector(`.lightbox`);
 
 // Шаг 2 добавить как  шаблоную строку
 
-const createGalleryList = ({ preview, original, description }) =>
-  `<li class="gallery__item">
+const createGalleryList = images => {
+  const { preview, description, original } = images;
+  return `<li class="gallery__item">
 <a
   class="gallery__link"
   href=${original}
@@ -87,14 +89,48 @@ const createGalleryList = ({ preview, original, description }) =>
   />
 </a>
 </li>`;
+};
 
-// Шаг 3 перебрать массив
-const galleryMarkup = galleryItems.reduce(
-  (acc, item) => acc + createGalleryList(item),
-  ``,
-);
+const galleryMarkup = galleryItems.map(createGalleryList).join('');
 
-// шаг 4 добавить новый массив в html
-galleryListRef.insertAdjacentHTML('afterbegin', galleryMarkup);
+galleryListRef.insertAdjacentHTML('beforeend', galleryMarkup);
 
 // Шаг 5 добавить слушателей на Галлерию , модалку, и кнопку
+
+galleryListRef.addEventListener(`click`, onOpenClickGallery);
+buttonRef.addEventListener(`click`, onClickClose);
+modalRef.addEventListener(`click`, closeModal);
+
+function onOpenClickGallery(evt) {
+  evt.preventDefault();
+
+  if (evt.target.nodeName !== `IMG`) {
+    return;
+  }
+  if (evt.target.nodeName === 'IMG') {
+    modalLightBox.classList.add('is-open');
+    modalImgRef.src = evt.target.getAttribute('data-source');
+    modalImgRef.alt = evt.target.alt;
+  }
+}
+
+const onEscClick = evt => {
+  if (evt.key === 'Escape');
+  modalLightBox.classList.remove('is-open');
+};
+
+window.addEventListener('keyup', onEscClick);
+
+function onClickClose(evt) {
+  evt.preventDefault();
+
+  modalLightBox.classList.remove('is-open');
+  modalImgRef.src = ``;
+  modalImgRef.alt = ``;
+}
+
+function closeModal(evt) {
+  if (evt.target === evt.currentTarget) {
+    onClickClose();
+  }
+}

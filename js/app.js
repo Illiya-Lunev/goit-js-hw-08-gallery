@@ -111,7 +111,7 @@ function onOpenClickGallery(evt) {
 }
 
 const onEscClick = evt => {
-  if (evt.key === 'Escape');
+  if (evt.code === 'Escape');
   modalLightBox.classList.remove('is-open');
 };
 

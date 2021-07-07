@@ -64,8 +64,6 @@ const galleryItems = [
   },
 ];
 
-// Шаг 1 найти классы с html через querySelector
-
 const galleryListRef = document.querySelector(`.js-gallery`);
 const modalRef = document.querySelector(`.lightbox__content`);
 const modalImgRef = document.querySelector('.lightbox__image');
@@ -133,7 +131,6 @@ function closeModal(evt) {
   }
 }
 
-// Сделать стрелки, и закрытие div.lightbox__overlay.
 function onOverlayClick(evt) {
   if (evt.currentTarget === evt.target) {
     modalLightBox.classList.remove('is-open');

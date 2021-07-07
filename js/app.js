@@ -71,15 +71,14 @@ const modalRef = document.querySelector(`.lightbox__content`);
 const modalImgRef = document.querySelector('.lightbox__image');
 const buttonRef = document.querySelector('[data-action="close-lightbox"]');
 const modalLightBox = document.querySelector(`.lightbox`);
-
-// Шаг 2 добавить как  шаблоную строку
+const Overlay = document.querySelector(`.lightbox__overlay`);
 
 const createGalleryList = images => {
   const { preview, description, original } = images;
   return `<li class="gallery__item">
 <a
   class="gallery__link"
-  href=${original}
+  href= ""
 >
   <img
     class="gallery__image"
@@ -95,11 +94,10 @@ const galleryMarkup = galleryItems.map(createGalleryList).join('');
 
 galleryListRef.insertAdjacentHTML('beforeend', galleryMarkup);
 
-// Шаг 5 добавить слушателей на Галлерию , модалку, и кнопку
-
 galleryListRef.addEventListener(`click`, onOpenClickGallery);
 buttonRef.addEventListener(`click`, onClickClose);
 modalRef.addEventListener(`click`, closeModal);
+Overlay.addEventListener(`click`, onOverlayClick);
 
 function onOpenClickGallery(evt) {
   evt.preventDefault();
@@ -109,7 +107,7 @@ function onOpenClickGallery(evt) {
   }
   if (evt.target.nodeName === 'IMG') {
     modalLightBox.classList.add('is-open');
-    modalImgRef.src = evt.target.getAttribute('data-source');
+    modalImgRef.src = evt.target.dataset.source;
     modalImgRef.alt = evt.target.alt;
   }
 }
@@ -132,5 +130,12 @@ function onClickClose(evt) {
 function closeModal(evt) {
   if (evt.target === evt.currentTarget) {
     onClickClose();
+  }
+}
+
+// Сделать стрелки, и закрытие div.lightbox__overlay.
+function onOverlayClick(evt) {
+  if (evt.currentTarget === evt.target) {
+    modalLightBox.classList.remove('is-open');
   }
 }

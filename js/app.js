@@ -76,7 +76,7 @@ const createGalleryList = images => {
   return `<li class="gallery__item">
 <a
   class="gallery__link"
-  href= ""
+  href= ${original}
 >
   <img
     class="gallery__image"
@@ -111,11 +111,11 @@ function onOpenClickGallery(evt) {
 }
 
 const onEscClick = evt => {
-  if (evt.code === 'Escape');
+  if (evt.key === 'Escape');
   modalLightBox.classList.remove('is-open');
 };
 
-window.addEventListener('keyup', onEscClick);
+window.addEventListener('keydown', onEscClick);
 
 function onClickClose(evt) {
   evt.preventDefault();
